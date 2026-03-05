@@ -35,16 +35,7 @@ BANK_ACCOUNT = os.getenv('BANK_ACCOUNT', '1234567890')
 BANK_ACCOUNT_NAME = os.getenv('BANK_ACCOUNT_NAME', 'Warung Jajanan Kita')
 ONGKIR = int(os.getenv('ONGKIR', '10000'))
 
-# Database configuration - support both SQLite and PostgreSQL
-DATABASE_URL = os.getenv('DATABASE_URL')
-if DATABASE_URL and DATABASE_URL.startswith('postgres://'):
-    # Railway PostgreSQL URL format fix
-    DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
-    USE_POSTGRES = True
-    DATABASE_FILE = None
-else:
-    USE_POSTGRES = False
-    DATABASE_FILE = 'umkm_bot.db'
+DATABASE_FILE = 'umkm_bot.db'
 
 # Conversation states
 ASKING_QUANTITY, ASKING_ADDRESS, ASKING_PAYMENT_PROOF, ADMIN_LOGIN_PASSWORD = range(4)
@@ -62,15 +53,9 @@ logger = logging.getLogger(__name__)
 
 @contextmanager
 def get_db_connection():
-    """Context manager for database connections - supports both SQLite and PostgreSQL"""
-    if USE_POSTGRES:
-        import psycopg2
-        from psycopg2.extras import RealDictCursor
-        conn = psycopg2.connect(DATABASE_URL)
-        conn.cursor_factory = RealDictCursor
-    else:
-        conn = sqlite3.connect(DATABASE_FILE)
-        conn.row_factory = sqlite3.Row
+    """Context manager for database connections"""
+    conn = sqlite3.connect(DATABASE_FILE)
+    conn.row_factory = sqlite3.Row
     try:
         yield conn
     finally:

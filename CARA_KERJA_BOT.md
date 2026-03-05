@@ -225,7 +225,7 @@ CUSTOMER                          BOT                           ADMIN
 
 ## 💾 Database
 
-Bot menyimpan data di database (SQLite atau PostgreSQL):
+Bot menyimpan data di database SQLite (`umkm_bot.db`):
 
 ### Tabel `menu`
 ```

@@ -213,9 +213,10 @@ railway logs
 - Pastikan bot token valid
 
 **Database hilang setelah redeploy:**
-- Railway menggunakan ephemeral storage
-- Untuk production, pertimbangkan menggunakan Railway PostgreSQL
-- Atau backup database secara berkala
+- Railway menggunakan ephemeral storage untuk SQLite
+- Database akan reset setiap redeploy
+- Untuk data persistent, backup database secara berkala
+- Atau gunakan Railway Volume untuk persistent storage
 
 **Gambar tidak muncul:**
 - Pastikan folder `gambar/` ada di repository
